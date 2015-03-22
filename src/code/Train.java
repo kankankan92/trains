@@ -1,3 +1,5 @@
+package code;
+
 public class Train {
     private String name = " ";
     Wagon first = null;
@@ -64,13 +66,44 @@ public class Train {
         Wagon current = first;
         while (current != null && passCount > 0) {
             if (!current.isFull()) {
-             if (passCount>current.getFreeSits()){
-                 passCount=passCount-
-             }
+                if (passCount > current.getFreeSits()) {
+                    passCount = passCount - current.getFreeSits();
+                    current.people = current.people + current.getFreeSits();
+                } else {
+                    current.people = current.people + passCount;
+                    passCount = 0;
+                }
             }
-            current.people
-                    current = current.next;
+            current = current.next;
         }
-        return -1;
+
+        return passCount;
     }
+
+    public Wagon getWagon(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("Номер вагона не может быть отрицательным, дебил");
+        }
+        Wagon current = first;
+        int num = 0;
+        while (current != null && num != n) {
+            current = current.next;
+            num++;
+        }
+        if (current == null) {
+            throw new RuntimeException("Вагона нет!");
+        }
+        return current;
+    }
+
+    public int wagonCount() {
+        Wagon current = first;
+        int wagonCount = 0;
+        while (current != null) {
+            current = current.next;
+            wagonCount++;
+        }
+        return wagonCount;
+    }
+
 }

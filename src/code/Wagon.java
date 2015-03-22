@@ -1,3 +1,5 @@
+package code;
+
 public class Wagon {
     public int people = 0;
     private static final int MAX_PEOPLE = 50;
