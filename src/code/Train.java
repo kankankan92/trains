@@ -31,7 +31,7 @@ public class Train {
 
     public Wagon remove() {
         if (first == null) {
-            return null;
+            throw new RuntimeException("Вагонов нет!");
         } else {
             if (first.next == null) {
                 Wagon wagon = first;
@@ -80,6 +80,25 @@ public class Train {
         return passCount;
     }
 
+    public int board2(int passCount) {
+        if (first == null) {
+            throw new RuntimeException("Вагонов нет!");
+        }
+        Wagon current = first;
+        while (current.next != null && passCount > 0) {
+            if (!current.isFull()) {
+                current.people++;
+                passCount--;
+                current = current.next;
+            }
+            current = current.next;
+
+        }
+
+
+        return passCount;
+    }
+
     public Wagon getWagon(int n) {
         if (n < 0) {
             throw new IllegalArgumentException("Номер вагона не может быть отрицательным, дебил");
@@ -104,6 +123,17 @@ public class Train {
             wagonCount++;
         }
         return wagonCount;
+    }
+
+    public boolean isFull() {
+        Wagon current = first;
+        while (current != null) {
+            if (!current.isFull()) {
+                return false;
+            }
+            current = current.next;
+        }
+        return true;
     }
 
 }
